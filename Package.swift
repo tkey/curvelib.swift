@@ -12,10 +12,20 @@ let package = Package(
             targets: ["curvelib"]),
     ],
     targets: [
+        .binaryTarget(name: "libcurvelib",
+                      path: "Sources/libcurvelib/libcurvelib.xcframework"
+        ),
+        
+        .target(name: "lib",
+               dependencies: ["libcurvelib"],
+                path: "Sources/libcurvelib"
+        ),
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "curvelib"),
+            name: "curvelib",
+            dependencies: ["lib"]
+        ),
         .testTarget(
             name: "curvelibTests",
             dependencies: ["curvelib"]),
