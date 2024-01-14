@@ -12,28 +12,20 @@ import Foundation
 
 public extension Data {
     init(hexString: String) throws {
-        var hex = hexString
-        // Remove any spaces or unwanted characters
-        hex = hex.replacingOccurrences(of: " ", with: "")
-        
-        // Ensure the hex string has an even number of characters
-        guard hex.count % 2 == 0 else {
+        let hex = hexString
+        guard hex.count.isMultiple(of: 2) else {
             throw RuntimeError("Invalid hex format")
+        }
+        
+        let chars = hex.map { $0 }
+        let bytes = stride(from: 0, to: chars.count, by: 2)
+            .map { String(chars[$0]) + String(chars[$0 + 1]) }
+            .compactMap { UInt8($0, radix: 16) }
+        
+        guard hex.count / bytes.count == 2 else {
 //            return nil
+            throw RuntimeError("Invalid hex format")
         }
-
-        // Create an array of UInt8 values
-        var bytes: [UInt8] = []
-        var index = hex.startIndex
-        while index < hex.endIndex {
-            guard let byte = UInt8(hex[index...]) else {
-//                return nil
-                throw RuntimeError("Invalid hex format")
-            }
-            bytes.append(byte)
-            index = hex.index(index, offsetBy: 2)
-        }
-
         self.init(bytes)
     }
     
