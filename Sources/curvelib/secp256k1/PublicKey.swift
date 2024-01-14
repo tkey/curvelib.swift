@@ -14,7 +14,8 @@ public class PublicKey {
     
     private(set) var pointer: OpaquePointer?
     
-    static public func fromPrivateKey ( privateKey : String ) throws -> PublicKey {
+    static public func fromPrivateKey ( privateKey : Data ) throws -> PublicKey {
+        let privateKey = privateKey.hexString
         
         var errorCode: Int32 = -1
         let privateKeyPointer = UnsafeMutablePointer<Int8>(mutating: (privateKey as NSString).utf8String)
