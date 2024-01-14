@@ -1,6 +1,6 @@
 import XCTest
-@testable import curvelib
-
+//@testable import curvelib
+import curvelib
 final class curvelibTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation

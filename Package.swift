@@ -11,12 +11,13 @@ let package = Package(
             name: "curvelib",
             targets: ["curvelib"]),
     ],
+
     targets: [
         .binaryTarget(name: "libcurvelib",
                       path: "Sources/libcurvelib/libcurvelib.xcframework"
         ),
         
-        .target(name: "lib",
+        .target(name: "tkeylibcurve",
                dependencies: ["libcurvelib"],
                 path: "Sources/libcurvelib"
         ),
@@ -24,7 +25,8 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "curvelib",
-            dependencies: ["lib"]
+            dependencies: ["tkeylibcurve"],
+            path: "Sources/curvelib"
         ),
         .testTarget(
             name: "curvelibTests",

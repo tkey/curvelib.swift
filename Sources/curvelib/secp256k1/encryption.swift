@@ -4,10 +4,11 @@
 //
 //  Created by CW Lee on 12/01/2024.
 //
-#if canImport(lib)
-    import lib
+#if canImport(tkeylibcurve)
+    import tkeylibcurve
 #endif
 import Foundation
+
 
 // return EncryptedMesssage Format
 func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
