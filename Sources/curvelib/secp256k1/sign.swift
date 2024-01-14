@@ -10,7 +10,7 @@
 #endif
 import Foundation
 
-func sign (privateKey: String, hash: Data) throws -> String {
+public func sign (privateKey: String, hash: Data) throws -> String {
     var errorCode: Int32 = -1
 
     let hashStr = String(data: hash, encoding: .utf8)

@@ -43,7 +43,7 @@ extension Data {
 }
 
 
-class PrivateKey {
+public class PrivateKey {
     public var rawData : Data;
     init(input: Data? = nil ) throws {
         guard let inputData = input else {

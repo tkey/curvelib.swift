@@ -10,7 +10,7 @@
 
 import Foundation
 
-class PublicKey {
+public class PublicKey {
     
     private(set) var pointer: OpaquePointer?
     
@@ -49,7 +49,7 @@ class PublicKey {
         self.pointer = inputPointer
     }
     
-    func getRaw () throws -> String {
+    public func getRaw () throws -> String {
         var errorCode: Int32 = -1
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
             secp256k1_public_key_raw(self.pointer, error)
@@ -62,7 +62,7 @@ class PublicKey {
         return string
     }
     
-    func getSec1Full () throws -> String {
+    public func getSec1Full () throws -> String {
         var errorCode: Int32 = -1
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
             secp256k1_public_key_sec1_full(self.pointer, error)
@@ -75,7 +75,7 @@ class PublicKey {
         return string
     }
     
-    func getSec1Compress () throws -> String {
+    public func getSec1Compress () throws -> String {
         var errorCode: Int32 = -1
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
             secp256k1_public_key_sec1_compress(self.pointer, error)

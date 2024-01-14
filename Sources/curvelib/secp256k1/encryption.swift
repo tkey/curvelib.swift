@@ -11,7 +11,7 @@ import Foundation
 
 
 // return EncryptedMesssage Format
-func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
+public func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
     var errorCode: Int32 = -1
 
     let messageStr = String(data: data, encoding: .utf8)
@@ -36,7 +36,7 @@ func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> EC
 
 
 //
-func decrypt( privateKey: String, data: ECIES ) throws -> Data {
+public func decrypt( privateKey: String, data: ECIES ) throws -> Data {
     var errorCode: Int32 = -1
     let data = try JSONEncoder().encode(data);
     let messageStr = String(data: data, encoding: .utf8)
