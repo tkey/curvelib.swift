@@ -30,7 +30,8 @@ public class PublicKey {
         return PublicKey(inputPointer: ptr)
     }
     
-    init( input: String ) throws {
+    public init( input: Data ) throws {
+        let input = input.hexString;
         
         var errorCode: Int32 = -1
         let inputPointer = UnsafeMutablePointer<Int8>(mutating: (input as NSString).utf8String)

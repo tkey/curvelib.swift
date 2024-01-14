@@ -10,7 +10,7 @@
 #endif
 import Foundation
 
-extension Data {
+public extension Data {
     init(hexString: String) throws {
         var hex = hexString
         // Remove any spaces or unwanted characters
@@ -45,7 +45,8 @@ extension Data {
 
 public class PrivateKey {
     public var rawData : Data;
-    init(input: Data? = nil ) throws {
+    
+    public init(input: Data? = nil ) throws {
         guard let inputData = input else {
             var errorCode: Int32 = -1
 
