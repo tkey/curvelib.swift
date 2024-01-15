@@ -21,14 +21,14 @@ public extension Secp256k1 {
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (messageStr! as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
-            secp256k1_encrypt(publicKeyPointer, messagePointer, error)
+            w3a_secp256k1_aes_sha512_encrypt(publicKeyPointer, messagePointer, error)
         })
         guard errorCode == 0 else {
             throw RuntimeError("Error in Secp256k1 encryption")
         }
         
         let string = String(cString: result!)
-        string_free(result)
+        w3a_curvelib_string_free(result)
         // expect decodabe result
         let jsonResult = try JSONDecoder().decode(ECIES.self, from: string.data(using: .utf8)!)
         
@@ -46,14 +46,14 @@ public extension Secp256k1 {
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (messageStr! as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
-            secp256k1_decrypt(privateKeyPointer, messagePointer, error)
+            w3a_secp256k1_aes_sha512_decrypt(privateKeyPointer, messagePointer, error)
         })
         guard errorCode == 0 else {
             throw RuntimeError("Error in Secp256k1 decryption")
         }
         
         let string = String(cString: result!)
-        string_free(result)
+        w3a_curvelib_string_free(result)
 //        guard let resultData = string.data(using: .utf8) else {
 //            throw RuntimeError("Error in Secp256k1 encryption")
 //        }

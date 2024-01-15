@@ -24,7 +24,7 @@ public extension Secp256k1 {
             
             
             let ptr = withUnsafeMutablePointer(to: &errorCode, { error in
-                secp256k1_public_key_from_private_key(privateKeyPointer, error)
+                w3a_secp256k1_public_key_from_private_key(privateKeyPointer, error)
             })
             guard errorCode == 0 else {
                 throw RuntimeError("Error in derive Public Key from Private Key")
@@ -46,7 +46,7 @@ public extension Secp256k1 {
             
             
             let ptr = withUnsafeMutablePointer(to: &errorCode, { error in
-                secp256k1_public_key_combine(serializeStringPointer, error)
+                w3a_secp256k1_public_key_combine(serializeStringPointer, error)
             })
             guard errorCode == 0 else {
                 throw RuntimeError("Error in derive Public Key from Private Key")
@@ -63,7 +63,7 @@ public extension Secp256k1 {
             
             
             let ptr = withUnsafeMutablePointer(to: &errorCode, { error in
-                secp256k1_public_key(inputPointer, error)
+                w3a_secp256k1_public_key(inputPointer, error)
             })
             guard errorCode == 0 else {
                 throw RuntimeError("Error in initialize Public Key")
@@ -78,44 +78,44 @@ public extension Secp256k1 {
         public func getRaw () throws -> String {
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                secp256k1_public_key_raw(self.pointer, error)
+                w3a_secp256k1_public_key_serialize(self.pointer, false, error)
             })
             guard errorCode == 0 else {
                 throw RuntimeError("Error in getRaw representation")
             }
             let string = String(cString: result!)
-            string_free(result)
-            return string
+            w3a_curvelib_string_free(result)
+            return String(string.suffix(128))
         }
         
         public func getSec1Full () throws -> String {
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                secp256k1_public_key_sec1_full(self.pointer, error)
+                w3a_secp256k1_public_key_serialize(self.pointer, false, error)
             })
             guard errorCode == 0 else {
                 throw RuntimeError("Error in getRaw representation")
             }
             let string = String(cString: result!)
-            string_free(result)
+            w3a_curvelib_string_free(result)
             return string
         }
         
         public func getSec1Compress () throws -> String {
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                secp256k1_public_key_sec1_compress(self.pointer, error)
+                w3a_secp256k1_public_key_serialize(self.pointer, true, error)
             })
             guard errorCode == 0 else {
                 throw RuntimeError("Error in getRaw representation")
             }
             let string = String(cString: result!)
-            string_free(result)
+            w3a_curvelib_string_free(result)
             return string
         }
         
         deinit{
-            secp256k1_public_key_free(self.pointer)
+            w3a_secp256k1_public_key_free(self.pointer)
         }
     }
 }

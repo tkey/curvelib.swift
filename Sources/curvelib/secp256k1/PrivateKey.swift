@@ -20,7 +20,7 @@ public extension Secp256k1 {
                 var errorCode: Int32 = -1
                 
                 let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                    secp256k1_private_key_generate(error)
+                    w3a_secp256k1_private_key_generate(error)
                     
                 })
                 
@@ -28,7 +28,7 @@ public extension Secp256k1 {
                     throw RuntimeError("Error in getRaw representation")
                 }
                 let string = String(cString: result!)
-                string_free(result)
+                w3a_curvelib_string_free(result)
                 
                 rawData = try Data(hexString: string)
                 return

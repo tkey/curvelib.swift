@@ -27,14 +27,14 @@ public class Secp256k1 {
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (hashStr as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
-            secp256k1_ecdsa_sign(privateKeyPointer, messagePointer, error)
+            w3a_secp256k1_ecdsa_recoverable_sign(privateKeyPointer, messagePointer, error)
         })
         guard errorCode == 0 else {
             throw RuntimeError("Error in Secp256k1 decryption")
         }
         
         let stringData = String(cString: result!).data(using: .utf8)!
-        string_free(result)
+        w3a_curvelib_string_free(result)
         
         let jsonObj = try JSONDecoder().decode(RecoverableSignature.self, from: stringData)
         return jsonObj

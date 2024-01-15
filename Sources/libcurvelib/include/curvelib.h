@@ -11,25 +11,23 @@
         //Forward Declarations
         struct PublicKey;
         //Methods
-        char* get_version(int* error_code);
-        void string_free(char *ptr);
-        void secp256k1_public_key_free(struct PublicKey* ptr);
+        char* w3a_curvelib_get_version(int* error_code);
+        void w3a_curvelib_string_free(char *ptr);
+        void w3a_secp256k1_public_key_free(struct PublicKey* ptr);
 
-        char* secp256k1_private_key_generate ( int* error_code);
+        char* w3a_secp256k1_private_key_generate ( int* error_code);
 
-        struct PublicKey* secp256k1_public_key_from_private_key ( char* private_key, int* error_code);
-        struct PublicKey* secp256k1_public_key ( char* public_key, int* error_code);
+        struct PublicKey* w3a_secp256k1_public_key_from_private_key ( char* private_key, int* error_code);
+        struct PublicKey* w3a_secp256k1_public_key ( char* public_key, int* error_code);
 
-        char* secp256k1_public_key_raw(struct PublicKey* public_key, int* error_code);
-        char* secp256k1_public_key_sec1_compress(struct PublicKey* public_key, int* error_code);
-        char* secp256k1_public_key_sec1_full(struct PublicKey* public_key, int* error_code);
+        char* w3a_secp256k1_public_key_serialize(struct PublicKey* public_key, bool compress, int* error_code);
         
-        struct PublicKey* secp256k1_public_key_combine ( char* public_keys, int* error_code);
+        struct PublicKey* w3a_secp256k1_public_key_combine ( char* public_keys, int* error_code);
 
-        char* secp256k1_ecdsa_sign ( char* private_key, char* message, int* error_code);
+        char* w3a_secp256k1_ecdsa_recoverable_sign ( char* private_key, char* message, int* error_code);
         
-        char* secp256k1_encrypt ( char* public_key, char* message, int* error_code);
-        char* secp256k1_decrypt ( char* private_key, char* message, int* error_code);
+        char* w3a_secp256k1_aes_sha512_encrypt ( char* public_key, char* message, int* error_code);
+        char* w3a_secp256k1_aes_sha512_decrypt ( char* private_key, char* message, int* error_code);
     #ifdef __cplusplus
     } // extern "C"
     #endif
