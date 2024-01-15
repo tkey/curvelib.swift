@@ -24,6 +24,8 @@
         char* secp256k1_public_key_sec1_compress(struct PublicKey* public_key, int* error_code);
         char* secp256k1_public_key_sec1_full(struct PublicKey* public_key, int* error_code);
         
+        struct PublicKey* secp256k1_public_key_combine ( char* public_keys, int* error_code);
+
         char* secp256k1_ecdsa_sign ( char* private_key, char* message, int* error_code);
         
         char* secp256k1_encrypt ( char* public_key, char* message, int* error_code);
