@@ -54,10 +54,10 @@ public extension Secp256k1 {
         
         let string = String(cString: result!)
         string_free(result)
-        guard let resultData = string.data(using: .utf8) else {
-            throw RuntimeError("Error in Secp256k1 encryption")
-        }
-        return resultData
+//        guard let resultData = string.data(using: .utf8) else {
+//            throw RuntimeError("Error in Secp256k1 encryption")
+//        }
+        return try Data(hexString: string)
     }
     
 }
