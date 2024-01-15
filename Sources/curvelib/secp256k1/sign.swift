@@ -16,7 +16,7 @@ public class Secp256k1 {
         var recover_id : Int
     }
     
-    public func Sign (privateKey: PrivateKey, hash: Data) throws -> RecoverableSignature {
+    static public func Sign (privateKey: PrivateKey, hash: Data) throws -> RecoverableSignature {
         let privateKey = privateKey.getHexString()
         
         var errorCode: Int32 = -1

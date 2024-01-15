@@ -12,12 +12,12 @@ import Foundation
 public extension Secp256k1 {
     
     // return EncryptedMesssage Format
-    func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
+    static func encrypt( publicKey: PublicKey, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
         var errorCode: Int32 = -1
         
         let messageStr = String(data: data, encoding: .utf8)
         
-        let publicKeyPointer = UnsafeMutablePointer<Int8>(mutating: (publicKey as NSString).utf8String)
+        let publicKeyPointer = try UnsafeMutablePointer<Int8>(mutating: (publicKey.getRaw() as NSString).utf8String)
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (messageStr! as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
@@ -37,12 +37,12 @@ public extension Secp256k1 {
     
     
     //
-    func decrypt( privateKey: String, data: ECIES ) throws -> Data {
+    static func decrypt( privateKey: PrivateKey, data: ECIES ) throws -> Data {
         var errorCode: Int32 = -1
         let data = try JSONEncoder().encode(data);
         let messageStr = String(data: data, encoding: .utf8)
         
-        let privateKeyPointer = UnsafeMutablePointer<Int8>(mutating: (privateKey as NSString).utf8String)
+        let privateKeyPointer = UnsafeMutablePointer<Int8>(mutating: (privateKey.getHexString() as NSString).utf8String)
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (messageStr! as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
