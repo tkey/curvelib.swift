@@ -21,10 +21,10 @@ public class Secp256k1 {
         
         var errorCode: Int32 = -1
         
-        let hashStr = String(data: hash, encoding: .utf8)
+        let hashStr = hash.hexString
         
         let privateKeyPointer = UnsafeMutablePointer<Int8>(mutating: (privateKey as NSString).utf8String)
-        let messagePointer = UnsafeMutablePointer<Int8>(mutating: (hashStr! as NSString).utf8String)
+        let messagePointer = UnsafeMutablePointer<Int8>(mutating: (hashStr as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
             secp256k1_ecdsa_sign(privateKeyPointer, messagePointer, error)
