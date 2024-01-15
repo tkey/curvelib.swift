@@ -26,6 +26,8 @@
 
         char* w3a_secp256k1_ecdsa_recoverable_sign ( char* private_key, char* message, int* error_code);
         
+        char* w3a_secp256k1_ecdh ( char* private_key, char* public_key, int* error_code);
+        
         char* w3a_secp256k1_aes_sha512_encrypt ( char* public_key, char* message, int* error_code);
         char* w3a_secp256k1_aes_sha512_decrypt ( char* private_key, char* message, int* error_code);
     #ifdef __cplusplus
