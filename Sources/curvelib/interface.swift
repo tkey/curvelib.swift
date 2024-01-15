@@ -13,4 +13,12 @@ public struct ECIES: Codable {
     public let ciphertext: String
     public let mac: String
     public let mode: String?
+
+    public init(iv: String, ephemPublicKey: String, ciphertext: String, mac: String, mode: String? = nil) {
+        self.iv = iv
+        self.ephemPublicKey = ephemPublicKey
+        self.ciphertext = ciphertext
+        self.mac = mac
+        self.mode = mode
+    }
 }
