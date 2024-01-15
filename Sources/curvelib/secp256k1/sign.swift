@@ -10,7 +10,7 @@
 #endif
 import Foundation
 
-class Secp256k1 {
+public class Secp256k1 {
     public struct RecoverableSignature : Codable {
         var signature : String
         var recover_id : Int

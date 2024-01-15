@@ -10,9 +10,9 @@
 #endif
 import Foundation
 
-extension Secp256k1 {
+public extension Secp256k1 {
     
-    public class PrivateKey {
+    class PrivateKey {
         public var rawData : Data;
         
         public init(input: Data? = nil ) throws {

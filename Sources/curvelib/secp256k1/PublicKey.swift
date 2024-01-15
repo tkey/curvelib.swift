@@ -10,9 +10,9 @@
 
 import Foundation
 
-extension Secp256k1 {
+public extension Secp256k1 {
     
-    public class PublicKey {
+    class PublicKey {
         
         private(set) var pointer: OpaquePointer?
         

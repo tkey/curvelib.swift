@@ -9,10 +9,10 @@
 #endif
 import Foundation
 
-extension Secp256k1 {
+public extension Secp256k1 {
     
     // return EncryptedMesssage Format
-    public func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
+    func encrypt( publicKey: String, data: Data , opts: ECIES? = nil ) throws  -> ECIES {
         var errorCode: Int32 = -1
         
         let messageStr = String(data: data, encoding: .utf8)
@@ -37,7 +37,7 @@ extension Secp256k1 {
     
     
     //
-    public func decrypt( privateKey: String, data: ECIES ) throws -> Data {
+    func decrypt( privateKey: String, data: ECIES ) throws -> Data {
         var errorCode: Int32 = -1
         let data = try JSONEncoder().encode(data);
         let messageStr = String(data: data, encoding: .utf8)
