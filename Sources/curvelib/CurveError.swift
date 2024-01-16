@@ -26,10 +26,9 @@ struct CurveError: Error, LocalizedError {
         default: type = .unknownStatusCode
         }
     }
-    
+
     public var errorDescription: String? {
         switch type {
-            
         case .null:
             return "One or more of the parameters was null"
         case .convert:
