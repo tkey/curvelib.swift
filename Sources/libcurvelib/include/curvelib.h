@@ -10,22 +10,32 @@
 
         //Forward Declarations
         struct PublicKey;
+        struct SecretKey;
+        struct RecoverableSignature;
         //Methods
         char* w3a_curvelib_get_version(int* error_code);
         void w3a_curvelib_string_free(char *ptr);
         void w3a_secp256k1_public_key_free(struct PublicKey* ptr);
 
         char* w3a_secp256k1_private_key_generate ( int* error_code);
+        struct SecretKey* w3a_secp256k1_private_key ( char* private_key, int* error_code);
+        void w3a_secp256k1_private_key_free(struct SecretKey* ptr);
 
         struct PublicKey* w3a_secp256k1_public_key_from_private_key ( char* private_key, int* error_code);
         struct PublicKey* w3a_secp256k1_public_key ( char* public_key, int* error_code);
 
         char* w3a_secp256k1_public_key_serialize(struct PublicKey* public_key, bool compress, int* error_code);
-        
+    
         struct PublicKey* w3a_secp256k1_public_key_combine ( char* public_keys, int* error_code);
 
-        char* w3a_secp256k1_ecdsa_recoverable_sign ( char* private_key, char* message, int* error_code);
-        
+        struct RecoverableSignature* w3a_secp256k1_recoverable_signature( char* signature, int recover_id, int* error_code);
+        char* w3a_secp256k1_recoverable_signature_serialize_compact ( struct RecoverableSignature* r_signature, int* error_code);
+        int w3a_secp256k1_recoverable_signature_recover_id ( struct RecoverableSignature* r_signature, int* error_code);
+        void w3a_secp256k1_recoverable_signature_free(struct RecoverableSignature* ptr);
+
+        struct RecoverableSignature* w3a_secp256k1_ecdsa_recoverable_sign ( char* private_key, char* message, int* error_code);
+        struct PublicKey* w3a_secp256k1_ecdsa_recover ( struct RecoverableSignature* r_signature, char* message, int* error_code);
+
         char* w3a_secp256k1_ecdh ( char* private_key, char* public_key, int* error_code);
         
         char* w3a_secp256k1_aes_sha512_encrypt ( char* public_key, char* message, int* error_code);

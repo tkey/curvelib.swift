@@ -11,10 +11,6 @@
 import Foundation
 
 public class Secp256k1 {
-    public struct RecoverableSignature : Codable {
-        public var signature : String
-        public var recover_id : Int
-    }
     
     static public func recoverableSign (privateKey: PrivateKey, hash: Data) throws -> RecoverableSignature {
         let privateKey = privateKey.getHexString()
@@ -33,11 +29,25 @@ public class Secp256k1 {
             throw RuntimeError("Error in Secp256k1 decryption")
         }
         
-        let stringData = String(cString: result!).data(using: .utf8)!
-        w3a_curvelib_string_free(result)
+        return try RecoverableSignature.init(pointer: result)
         
-        let jsonObj = try JSONDecoder().decode(RecoverableSignature.self, from: stringData)
-        return jsonObj
+    }
+    
+    static public func recoverPublicKey( rSignature : RecoverableSignature, message: Data ) throws -> PublicKey {
+        
+        var errorCode: Int32 = -1
+        
+        let messagePointer = UnsafeMutablePointer<Int8>(mutating: (message.hexString as NSString).utf8String)
+        
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            w3a_secp256k1_ecdsa_recover(rSignature.pointer, messagePointer, error)
+        })
+        guard errorCode == 0 else {
+            throw RuntimeError("Error in Secp256k1 decryption")
+        }
+        
+        return try PublicKey(inputPointer: result)
+        
     }
     
     static public func ecdh (privateKey: PrivateKey, publicKey: PublicKey) throws -> Data {

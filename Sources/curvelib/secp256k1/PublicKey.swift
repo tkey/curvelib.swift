@@ -16,6 +16,20 @@ public extension Secp256k1 {
         
         private(set) var pointer: OpaquePointer?
         
+        static func serialize(pointer: OpaquePointer?, compress: Bool) throws -> String {
+            
+            var errorCode: Int32 = -1
+            let result = withUnsafeMutablePointer(to: &errorCode, { error in
+                w3a_secp256k1_public_key_serialize(pointer, compress, error)
+            })
+            guard errorCode == 0 else {
+                throw RuntimeError("Error in serialization")
+            }
+            let string = String(cString: result!)
+            w3a_curvelib_string_free(result)
+            return string
+        }
+        
         static public func fromPrivateKey ( privateKey : Data ) throws -> PublicKey {
             let privateKey = privateKey.hexString
             
@@ -30,7 +44,7 @@ public extension Secp256k1 {
                 throw RuntimeError("Error in derive Public Key from Private Key")
             }
             
-            return PublicKey(inputPointer: ptr)
+            return try PublicKey(inputPointer: ptr)
         }
         
         static public func combine ( publicKeys : [PublicKey] ) throws -> PublicKey {
@@ -52,7 +66,7 @@ public extension Secp256k1 {
                 throw RuntimeError("Error in derive Public Key from Private Key")
             }
             
-            return PublicKey(inputPointer: ptr)
+            return try PublicKey(inputPointer: ptr)
         }
         
         public init( input: Data ) throws {
@@ -71,7 +85,8 @@ public extension Secp256k1 {
             self.pointer = ptr
         }
         
-        init ( inputPointer: OpaquePointer? ) {
+        init ( inputPointer: OpaquePointer? ) throws {
+            let _ = try PublicKey.serialize(pointer: inputPointer, compress: true)
             self.pointer = inputPointer
         }
         

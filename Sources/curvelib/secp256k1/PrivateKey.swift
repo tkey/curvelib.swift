@@ -14,6 +14,7 @@ public extension Secp256k1 {
     
     class PrivateKey {
         public var rawData : Data;
+        var pointer: OpaquePointer?;
         
         public init(input: Data? = nil ) throws {
             guard let inputData = input else {
@@ -33,7 +34,20 @@ public extension Secp256k1 {
                 rawData = try Data(hexString: string)
                 return
             }
+            
+            
+            var errorCode: Int32 = -1
+            
+            let dataPointer = UnsafeMutablePointer<Int8>(mutating: (inputData.hexString as NSString).utf8String)
+            let result = withUnsafeMutablePointer(to: &errorCode, { error in
+                w3a_secp256k1_private_key(dataPointer, error)
+            })
+            
+            guard errorCode == 0 else {
+                throw RuntimeError("Error in getRaw representation")
+            }
             rawData = inputData
+            self.pointer = result
         }
         
         public func getPublicKey() throws -> PublicKey {
@@ -43,6 +57,10 @@ public extension Secp256k1 {
         
         public func getHexString() -> String {
             return rawData.hexString
+        }
+        
+        deinit{
+            w3a_secp256k1_private_key_free(self.pointer)
         }
     }
 }
