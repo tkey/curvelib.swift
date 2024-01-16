@@ -4,32 +4,38 @@
 import PackageDescription
 
 let package = Package(
-    name: "curvelib",
+    name: "curvelib.swift",
+    platforms: [
+        .iOS(SupportedPlatform.IOSVersion.v14), .macOS(.v10_15)
+    ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "curvelib",
-            targets: ["curvelib"]),
+            name: "curvelib.swift",
+            targets: ["curvelib.swift"]),
     ],
-
+    dependencies: [
+        // Dependencies declare other packages that this package depends on.
+        // .package(url: /* package url */, from: "1.0.0"),
+    ],
     targets: [
-        .binaryTarget(name: "libcurvelib",
-                      path: "Sources/libcurvelib/libcurvelib.xcframework"
+        .binaryTarget(name: "secp256k1_curve",
+                      path: "Sources/curve_secp256k1/curve_secp256k1.xcframework"
         ),
         
-        .target(name: "tkeylibcurve",
-               dependencies: ["libcurvelib"],
-                path: "Sources/libcurvelib"
+        .target(name: "lib",
+               dependencies: ["secp256k1_curve"],
+                path: "Sources/curve_secp256k1"
         ),
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "curvelib",
-            dependencies: ["tkeylibcurve"],
+            name: "curvelib.swift",
+            dependencies: ["lib"],
             path: "Sources/curvelib"
         ),
         .testTarget(
             name: "curvelibTests",
-            dependencies: ["curvelib"]),
+            dependencies: ["lib"]),
     ]
 )
