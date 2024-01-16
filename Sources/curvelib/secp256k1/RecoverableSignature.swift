@@ -12,8 +12,8 @@ import Foundation
 #endif
 public extension Secp256k1 {
     class RecoverableSignature {
-        public var signature : String
-        public var recoverId : Int
+        public var signature : Data
+        public var recoverId : UInt8
         var pointer : OpaquePointer?
         
         public init(pointer: OpaquePointer?) throws {
@@ -24,7 +24,7 @@ public extension Secp256k1 {
             guard errorCode == 0 else {
                 throw RuntimeError("Error in RecoverableSignature : invalid format")
             }
-            self.signature = String(cString: result!)
+            self.signature = try Data(hexString:String(cString: result!))
             w3a_curvelib_string_free(result)
             
             errorCode = -1
@@ -34,15 +34,14 @@ public extension Secp256k1 {
             guard errorCode == 0 else {
                 throw RuntimeError("Error in RecoverableSignature : invalid format")
             }
-            self.recoverId = Int(rid)
+            self.recoverId = UInt8(rid)
             self.pointer = pointer
             
         }
          
         
-        public init ( signature: Data, recoverId: Int ) throws {
+        public init ( signature: Data, recoverId: UInt8 ) throws {
             var errorCode: Int32 = -1
-            
             let signaturePointer = UnsafeMutablePointer<Int8>(mutating: (signature.hexString as NSString).utf8String)
             
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
@@ -51,9 +50,17 @@ public extension Secp256k1 {
             guard errorCode == 0 else {
                 throw RuntimeError("Error in RecoverableSignature : invalid format")
             }
-            self.signature = signature.hexString
+            self.signature = signature
             self.recoverId = recoverId
             self.pointer = result
+        }
+        
+        public convenience init ( r: Data, s: Data, v: UInt8)  throws {
+            if r.count != 32 || s.count != 32 {
+                throw RuntimeError("Invalid r/s format")
+            }
+            
+            try self.init(signature: r + s, recoverId: v)
         }
         
         deinit {
