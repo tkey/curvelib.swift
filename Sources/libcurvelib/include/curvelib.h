@@ -34,7 +34,7 @@
         void w3a_secp256k1_recoverable_signature_free(struct RecoverableSignature* ptr);
 
         struct RecoverableSignature* w3a_secp256k1_ecdsa_recoverable_sign ( char* private_key, char* message, int* error_code);
-        struct PublicKey* w3a_secp256k1_ecdsa_recover ( struct RecoverableSignature* r_signature, char* message, int* error_code);
+        struct PublicKey* w3a_secp256k1_ecdsa_recover_public_key ( struct RecoverableSignature* r_signature, char* message, int* error_code);
 
         char* w3a_secp256k1_ecdh ( char* private_key, char* public_key, int* error_code);
         

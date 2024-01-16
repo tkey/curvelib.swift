@@ -40,7 +40,7 @@ public class Secp256k1 {
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (message.hexString as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
-            w3a_secp256k1_ecdsa_recover(rSignature.pointer, messagePointer, error)
+            w3a_secp256k1_ecdsa_recover_public_key(rSignature.pointer, messagePointer, error)
         })
         guard errorCode == 0 else {
             throw RuntimeError("Error in Secp256k1 decryption")
