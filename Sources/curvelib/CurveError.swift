@@ -1,6 +1,6 @@
 import Foundation
 
-struct CurveError: Error {
+struct CurveError: Error, LocalizedError {
     enum ErrorType {
         case null
         case convert
@@ -24,6 +24,28 @@ struct CurveError: Error {
         case 6: type = .keySizeError
         case 7: type = .signatureError
         default: type = .unknownStatusCode
+        }
+    }
+    
+    public var errorDescription: String? {
+        switch type {
+            
+        case .null:
+            return "One or more of the parameters was null"
+        case .convert:
+            return "Invalid data was supplied"
+        case .parse:
+            return "Invalid data was supplied"
+        case .tweakError:
+            return "Cannot perform tweak operation"
+        case .serialize:
+            return "Serialization failed"
+        case .keySizeError:
+            return "Incorrect key size"
+        case .signatureError:
+            return "Incorrect data supplied for signing or recovery"
+        case .unknownStatusCode:
+            return "Library reported an unknown status code, please open an issue on github"
         }
     }
 }
