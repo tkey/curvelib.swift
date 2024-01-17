@@ -1,6 +1,6 @@
 import Foundation
 
-struct CurveError: Error, LocalizedError {
+public struct CurveError: Error, LocalizedError {
     enum ErrorType {
         case null
         case convert
@@ -12,7 +12,7 @@ struct CurveError: Error, LocalizedError {
         case unknownStatusCode
     }
 
-    let type: ErrorType
+    private(set) var type: ErrorType
 
     init(code: Int32) {
         switch code {

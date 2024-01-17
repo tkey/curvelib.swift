@@ -4,7 +4,7 @@ import Foundation
     import lib
 #endif
 
-public class ECDH {
+public final class ECDH {
     public static func SHA256(sk: SecretKey, pk: PublicKey) throws -> String {
         var errorCode: Int32 = -1
         let result = withUnsafeMutablePointer(to: &errorCode, { error in

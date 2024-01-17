@@ -4,7 +4,7 @@ import Foundation
     import lib
 #endif
 
-public class Signature {
+public final class Signature {
     private(set) var pointer: OpaquePointer?
 
     internal init(ptr: OpaquePointer) {

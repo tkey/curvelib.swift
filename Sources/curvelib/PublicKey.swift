@@ -4,7 +4,7 @@ import Foundation
     import lib
 #endif
 
-public class PublicKey {
+public final class PublicKey {
     private(set) var pointer: OpaquePointer?
 
     internal init(ptr: OpaquePointer) {

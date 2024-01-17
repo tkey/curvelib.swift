@@ -4,7 +4,7 @@ import Foundation
     import lib
 #endif
 
-public class SecretKey {
+public final class SecretKey {
     private(set) var pointer: OpaquePointer?
 
     public init() {

@@ -4,7 +4,7 @@ import Foundation
     import lib
 #endif
 
-public class ECDSA {
+public final class ECDSA {
     public static func sign_recoverable(key: SecretKey, hash: String) throws -> Signature {
         var errorCode: Int32 = -1
         let hexPtr = UnsafeMutablePointer<Int8>(mutating: (hash as NSString).utf8String)

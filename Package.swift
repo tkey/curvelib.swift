@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -19,12 +19,12 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
     ],
     targets: [
-        .binaryTarget(name: "secp256k1_curve",
+        .binaryTarget(name: "curve_secp256k1",
                       path: "Sources/curve_secp256k1/curve_secp256k1.xcframework"
         ),
         
         .target(name: "lib",
-               dependencies: ["secp256k1_curve"],
+               dependencies: ["curve_secp256k1"],
                 path: "Sources/curve_secp256k1"
         ),
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -36,6 +36,6 @@ let package = Package(
         ),
         .testTarget(
             name: "curvelibTests",
-            dependencies: ["lib"]),
+            dependencies: ["curvelib.swift"]),
     ]
 )
