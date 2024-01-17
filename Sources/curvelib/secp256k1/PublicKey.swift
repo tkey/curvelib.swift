@@ -90,7 +90,7 @@ public extension Secp256k1 {
             self.pointer = inputPointer
         }
         
-        public func getRaw () throws -> String {
+        public func getRaw () throws -> Data {
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
                 w3a_secp256k1_public_key_serialize(self.pointer, false, error)
@@ -100,10 +100,10 @@ public extension Secp256k1 {
             }
             let string = String(cString: result!)
             w3a_curvelib_string_free(result)
-            return String(string.suffix(128))
+            return try Data(hexString: String(string.suffix(128)))
         }
         
-        public func getSec1Full () throws -> String {
+        public func getSec1Full () throws -> Data {
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
                 w3a_secp256k1_public_key_serialize(self.pointer, false, error)
@@ -113,10 +113,10 @@ public extension Secp256k1 {
             }
             let string = String(cString: result!)
             w3a_curvelib_string_free(result)
-            return string
+            return try Data(hexString: string)
         }
         
-        public func getSec1Compress () throws -> String {
+        public func getSec1Compress () throws -> Data {
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
                 w3a_secp256k1_public_key_serialize(self.pointer, true, error)
@@ -126,7 +126,7 @@ public extension Secp256k1 {
             }
             let string = String(cString: result!)
             w3a_curvelib_string_free(result)
-            return string
+            return try Data(hexString: string)
         }
         
         deinit{

@@ -17,7 +17,7 @@ public extension Secp256k1 {
         
         let messageStr = String(data: data, encoding: .utf8)
         
-        let publicKeyPointer = try UnsafeMutablePointer<Int8>(mutating: (publicKey.getRaw() as NSString).utf8String)
+        let publicKeyPointer = try UnsafeMutablePointer<Int8>(mutating: (publicKey.getRaw().hexString as NSString).utf8String)
         let messagePointer = UnsafeMutablePointer<Int8>(mutating: (messageStr! as NSString).utf8String)
         
         let result = withUnsafeMutablePointer(to: &errorCode, { error in

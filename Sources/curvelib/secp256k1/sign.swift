@@ -52,7 +52,7 @@ public class Secp256k1 {
     
     static public func ecdh (privateKey: PrivateKey, publicKey: PublicKey) throws -> Data {
         let privateKey = privateKey.getHexString()
-        let publicKey = try publicKey.getRaw()
+        let publicKey = try publicKey.getRaw().hexString
         
         var errorCode: Int32 = -1
         
