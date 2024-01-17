@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "curvelib.swift",
     platforms: [
-        .iOS(SupportedPlatform.IOSVersion.v14), .macOS(.v10_15)
+        .iOS(SupportedPlatform.IOSVersion.v13), .macOS(.v10_15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
