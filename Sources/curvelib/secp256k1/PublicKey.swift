@@ -16,7 +16,7 @@ public extension Secp256k1 {
         
         private(set) var pointer: OpaquePointer?
         
-        static func serialize(pointer: OpaquePointer?, compress: Bool) throws -> String {
+        static func serialize(pointer: OpaquePointer?, compress: Bool) throws -> Data {
             
             var errorCode: Int32 = -1
             let result = withUnsafeMutablePointer(to: &errorCode, { error in
@@ -27,7 +27,7 @@ public extension Secp256k1 {
             }
             let string = String(cString: result!)
             w3a_curvelib_string_free(result)
-            return string
+            return try Data(hexString: string)
         }
         
         static public func fromPrivateKey ( privateKey : Data ) throws -> PublicKey {
@@ -48,7 +48,7 @@ public extension Secp256k1 {
         }
         
         static public func combine ( publicKeys : [PublicKey] ) throws -> PublicKey {
-            let publickeysArray = try publicKeys.map { try $0.getRaw() }
+            let publickeysArray = try publicKeys.map { try $0.getRaw().hexString }
             
             let serialized = try JSONSerialization.data(withJSONObject: publickeysArray)
             guard let serializeString = String(bytes: serialized, encoding: .utf8) else {
@@ -91,42 +91,15 @@ public extension Secp256k1 {
         }
         
         public func getRaw () throws -> Data {
-            var errorCode: Int32 = -1
-            let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key_serialize(self.pointer, false, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in getRaw representation")
-            }
-            let string = String(cString: result!)
-            w3a_curvelib_string_free(result)
-            return try Data(hexString: String(string.suffix(128)))
+            return try PublicKey.serialize(pointer: self.pointer, compress: false).suffix(64)
         }
         
         public func getSec1Full () throws -> Data {
-            var errorCode: Int32 = -1
-            let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key_serialize(self.pointer, false, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in getRaw representation")
-            }
-            let string = String(cString: result!)
-            w3a_curvelib_string_free(result)
-            return try Data(hexString: string)
+            return try PublicKey.serialize(pointer: self.pointer, compress: false)
         }
         
         public func getSec1Compress () throws -> Data {
-            var errorCode: Int32 = -1
-            let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key_serialize(self.pointer, true, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in getRaw representation")
-            }
-            let string = String(cString: result!)
-            w3a_curvelib_string_free(result)
-            return try Data(hexString: string)
+            return try PublicKey.serialize(pointer: self.pointer, compress: true)
         }
         
         deinit{
