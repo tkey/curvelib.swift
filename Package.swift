@@ -23,7 +23,7 @@ let package = Package(
                       path: "Sources/curve_secp256k1/curve_secp256k1.xcframework"
         ),
         
-        .target(name: "lib",
+        .target(name: "curvelib",
                dependencies: ["curve_secp256k1"],
                 path: "Sources/curve_secp256k1"
         ),
@@ -31,7 +31,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "curvelib.swift",
-            dependencies: ["lib"],
+            dependencies: ["curvelib"],
             path: "Sources/curvelib"
         ),
         .testTarget(

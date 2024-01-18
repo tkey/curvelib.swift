@@ -29,7 +29,7 @@ final class curvelibTests: XCTestCase {
         let pk = try SecretKey().to_public()
         try pk.add_assign(key: SecretKey())
         try pk.mul_assign(key: SecretKey())
-        let mul = try pk.mul(key: SecretKey())
+        _ = try pk.mul(key: SecretKey())
         var serialized = try pk.serialize(compressed: false);
         XCTAssertEqual(serialized.count, 130)
         serialized = try pk.serialize(compressed: true);

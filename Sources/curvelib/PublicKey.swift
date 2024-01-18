@@ -1,7 +1,7 @@
 import Foundation
 
-#if canImport(lib)
-    import lib
+#if canImport(curvelib)
+    import curvelib
 #endif
 
 public final class PublicKey {
