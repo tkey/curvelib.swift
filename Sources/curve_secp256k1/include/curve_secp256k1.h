@@ -35,6 +35,7 @@ struct PublicKey * curve_secp256k1_public_key_parse(char *input, int *error_code
 char * curve_secp256k1_public_key_serialize(struct PublicKey *key, bool compress, int *error_code);
 void curve_secp256k1_public_key_tweak_add_assign(struct PublicKey *key, struct SecretKey *tweak, int *error_code);
 void curve_secp256k1_public_key_tweak_mul_assign(struct PublicKey *key, struct SecretKey *tweak, int *error_code);
+struct PublicKey * curve_secp256k1_public_key_tweak_mul(struct PublicKey *key, struct SecretKey *tweak, int *error_code);
 struct PublicKey * curve_secp256k1_public_key_combine(struct PublicKeyCollection* collection, int *error_code);
 void curve_secp256k1_public_key_free(struct PublicKey *key);
 
@@ -49,8 +50,7 @@ char * curve_secp256k1_ecdsa_signature_serialize(struct Signature *sig, int *err
 void curve_secp256k1_signature_free(struct Signature *signature);
 
 // ECDH
-char *curve_secp256k1_ecdh_sha256(struct SecretKey *secret, struct PublicKey *public_key, int *error_code);
-char *curve_secp256k1_ecdh_sha512(struct SecretKey *secret, struct PublicKey *public_key, int *error_code);
+char *curve_secp256k1_ecdh(struct SecretKey *secret, struct PublicKey *public_key, int *error_code);
 
 // ECDSA
 struct Signature * curve_secp256k1_ecdsa_sign_recoverable(struct SecretKey *key, char *hash, int *error_code);

@@ -53,6 +53,17 @@ public final class PublicKey {
             throw CurveError(code: errorCode)
         }
     }
+    
+    public func mul(key: SecretKey) throws -> PublicKey {
+        var errorCode: Int32 = -1
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_tweak_mul(pointer, key.pointer, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
+        }
+        return PublicKey(ptr: result!)
+    }
 
     public func serialize(compressed: Bool) throws -> String {
         var errorCode: Int32 = -1
