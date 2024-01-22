@@ -1,5 +1,5 @@
 import XCTest
-import secp256k1_swift
+import curvelib_swift
 
 final class curvelibTests: XCTestCase {
     func testSecretKey() throws {
