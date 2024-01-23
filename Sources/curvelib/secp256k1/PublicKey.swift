@@ -1,109 +1,84 @@
-//
-//  PublicKey.swift
-//  
-//
-//  Created by CW Lee on 12/01/2024.
-//
-#if canImport(tkeylibcurve)
-    import tkeylibcurve
-#endif
-
 import Foundation
 
-public extension Secp256k1 {
+#if canImport(curvelib)
+    import curvelib
+#endif
+
+public final class PublicKey {
+    private(set) var pointer: OpaquePointer?
+
+    internal init(ptr: OpaquePointer) {
+        pointer = ptr
+    }
+
+    public static func combine(collection: PublicKeyCollection) throws -> PublicKey {
+        var errorCode: Int32 = -1
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_combine(collection.pointer, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
+        }
+        return PublicKey(ptr: result!)
+    }
+
+    public init(hex: String) throws {
+        var errorCode: Int32 = -1
+        let hexPtr = UnsafeMutablePointer<Int8>(mutating: (hex as NSString).utf8String)
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_parse(hexPtr, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
+        }
+        pointer = result
+    }
+
+    public func addAssign(key: SecretKey) throws {
+        var errorCode: Int32 = -1
+        withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_tweak_add_assign(pointer, key.pointer, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
+        }
+    }
+
+    public func mulAssign(key: SecretKey) throws {
+        var errorCode: Int32 = -1
+        withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_tweak_mul_assign(pointer, key.pointer, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
+        }
+    }
     
-    class PublicKey {
-        
-        private(set) var pointer: OpaquePointer?
-        
-        static func serialize(pointer: OpaquePointer?, compress: Bool) throws -> Data {
-            
-            var errorCode: Int32 = -1
-            let result = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key_serialize(pointer, compress, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in serialization")
-            }
-            let string = String(cString: result!)
-            w3a_curvelib_string_free(result)
-            return try Data(hexString: string)
+    public func mul(key: SecretKey) throws -> PublicKey {
+        var errorCode: Int32 = -1
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_tweak_mul(pointer, key.pointer, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
         }
-        
-        static public func fromPrivateKey ( privateKey : Data ) throws -> PublicKey {
-            let privateKey = privateKey.hexString
-            
-            var errorCode: Int32 = -1
-            let privateKeyPointer = UnsafeMutablePointer<Int8>(mutating: (privateKey as NSString).utf8String)
-            
-            
-            let ptr = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key_from_private_key(privateKeyPointer, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in derive Public Key from Private Key")
-            }
-            
-            return try PublicKey(inputPointer: ptr)
+        return PublicKey(ptr: result!)
+    }
+
+    public func serialize(compressed: Bool) throws -> String {
+        var errorCode: Int32 = -1
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_public_key_serialize(pointer, compressed, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
         }
-        
-        static public func combine ( publicKeys : [PublicKey] ) throws -> PublicKey {
-            let publickeysArray = try publicKeys.map { try $0.getRaw().hexString }
-            
-            let serialized = try JSONSerialization.data(withJSONObject: publickeysArray)
-            guard let serializeString = String(bytes: serialized, encoding: .utf8) else {
-                throw RuntimeError("Invalid Public Keys")
-            }
-            
-            var errorCode: Int32 = -1
-            let serializeStringPointer = UnsafeMutablePointer<Int8>(mutating: (serializeString as NSString).utf8String)
-            
-            
-            let ptr = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key_combine(serializeStringPointer, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in derive Public Key from Private Key")
-            }
-            
-            return try PublicKey(inputPointer: ptr)
-        }
-        
-        public init( input: Data ) throws {
-            let input = input.hexString;
-            
-            var errorCode: Int32 = -1
-            let inputPointer = UnsafeMutablePointer<Int8>(mutating: (input as NSString).utf8String)
-            
-            
-            let ptr = withUnsafeMutablePointer(to: &errorCode, { error in
-                w3a_secp256k1_public_key(inputPointer, error)
-            })
-            guard errorCode == 0 else {
-                throw RuntimeError("Error in initialize Public Key")
-            }
-            self.pointer = ptr
-        }
-        
-        init ( inputPointer: OpaquePointer? ) throws {
-            let _ = try PublicKey.serialize(pointer: inputPointer, compress: true)
-            self.pointer = inputPointer
-        }
-        
-        public func getRaw () throws -> Data {
-            return try PublicKey.serialize(pointer: self.pointer, compress: false).suffix(64)
-        }
-        
-        public func getSec1Full () throws -> Data {
-            return try PublicKey.serialize(pointer: self.pointer, compress: false)
-        }
-        
-        public func getSec1Compress () throws -> Data {
-            return try PublicKey.serialize(pointer: self.pointer, compress: true)
-        }
-        
-        deinit{
-            w3a_secp256k1_public_key_free(self.pointer)
-        }
+        let value = String(cString: result!)
+        curve_secp256k1_string_free(result)
+        return value
+    }
+
+    deinit {
+        curve_secp256k1_private_key_free(pointer)
     }
 }
