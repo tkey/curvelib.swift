@@ -16,16 +16,25 @@ final class curvelibErrorTests: XCTestCase {
         XCTAssertEqual(error.type, .parse)
         
         error = CurveError(code: 4)
-        XCTAssertEqual(error.type, .tweakError)
+        XCTAssertEqual(error.type, .tweak)
         
         error = CurveError(code: 5)
         XCTAssertEqual(error.type, .serialize)
         
         error = CurveError(code: 6)
-        XCTAssertEqual(error.type, .keySizeError)
+        XCTAssertEqual(error.type, .keySize)
         
         error = CurveError(code: 7)
-        XCTAssertEqual(error.type, .signatureError)
+        XCTAssertEqual(error.type, .signature)
+        
+        error = CurveError(code: 8)
+        XCTAssertEqual(error.type, .invalidMac)
+        
+        error = CurveError(code: 9)
+        XCTAssertEqual(error.type, .encryption)
+        
+        error = CurveError(code: 10)
+        XCTAssertEqual(error.type, .decryption)
     }
 }
 

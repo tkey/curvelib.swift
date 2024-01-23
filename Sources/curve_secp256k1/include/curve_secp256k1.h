@@ -12,6 +12,7 @@ struct PublicKey;
 struct SecretKey;
 struct Signature;
 struct PublicKeyCollection;
+struct EncryptedMessage;
 
 // Version
 char * curve_secp256k1_get_version(int *error_code);
@@ -50,11 +51,23 @@ char * curve_secp256k1_ecdsa_signature_serialize(struct Signature *sig, int *err
 void curve_secp256k1_signature_free(struct Signature *signature);
 
 // ECDH
-char *curve_secp256k1_ecdh(struct SecretKey *secret, struct PublicKey *public_key, int *error_code);
+char *curve_secp256k1_ecdh(struct SecretKey *secret_key, struct PublicKey *public_key, int *error_code); // sha256(pk.mul(sk).compress())
+char *curve_secp256k1_standard_ecdh(struct SecretKey *secret_key, struct PublicKey *public_key, int *error_code); // Note: This is the standard ecdh which differs from libsecp256k1
 
 // ECDSA
 struct Signature * curve_secp256k1_ecdsa_sign_recoverable(struct SecretKey *key, char *hash, int *error_code);
 struct PublicKey * curve_secp256k1_ecdsa_recover(struct Signature *signature, char *hash, int *error_code);
+
+// Encryption
+struct EncryptedMessage *curve_secp256k1_encrypted_message_from_components(char *ciphertext, struct PublicKey *ephemeral_public_key, char *iv, char *mac,  int* error_code);
+char *curve_secp256k1_encrypted_message_get_ciphertext(struct EncryptedMessage *message, int* error_code);
+struct PublickKey *curve_secp256k1_encrypted_message_get_ephemeral_public_key(struct EncryptedMessage *message, int* error_code);
+char *curve_secp256k1_encrypted_message_get_mac(struct EncryptedMessage *message,int* error_code);
+char *curve_secp256k1_encrypted_message_get_iv(struct EncryptedMessage *message,int* error_code);
+void curve_secp256k1_encrypted_message_free(struct EncryptedMessage *message);
+struct EncryptedMessage *curve_secp256k1_aes_cbc_hmac_encrypt(struct PublicKey *public_key, char *plain_text, int *error_code);
+char *curve_secp256k1_aes_cbc_hmac_decrypt(struct SecretKey* secret_key, struct EncryptedMessage* encrypted, int* error_code );
+
     #ifdef __cplusplus
 }     // extern "C"
     #endif
