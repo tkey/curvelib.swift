@@ -1,7 +1,7 @@
 import Foundation
 
 public struct CurveError: Error, LocalizedError {
-    enum ErrorType {
+    public enum ErrorType {
         case null
         case convert
         case parse
@@ -17,7 +17,7 @@ public struct CurveError: Error, LocalizedError {
 
     private(set) var type: ErrorType
 
-    init(code: Int32) {
+    public init(code: Int32) {
         switch code {
         case 1: type = .null
         case 2: type = .convert

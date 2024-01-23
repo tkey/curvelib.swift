@@ -13,6 +13,10 @@ let package = Package(
         .library(
             name: "secp256k1.swift",
             targets: ["secp256k1.swift"]),
+        
+        .library(
+            name: "encryption_aes_cbc_sha512.swift",
+            targets: ["encryption_aes_cbc_sha512.swift"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -32,10 +36,16 @@ let package = Package(
         .target(
             name: "secp256k1.swift",
             dependencies: ["curvelib"],
-            path: "Sources/curvelib"
+            path: "Sources/curvelib/secp256k1"
         ),
+        .target(
+            name: "encryption_aes_cbc_sha512.swift",
+            dependencies: ["curvelib", "secp256k1.swift"],
+            path: "Sources/curvelib/encryption"
+        ),
+        
         .testTarget(
             name: "curvelibTests",
-            dependencies: ["secp256k1.swift"]),
+            dependencies: ["secp256k1.swift", "encryption_aes_cbc_sha512.swift"]),
     ]
 )
