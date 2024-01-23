@@ -11,11 +11,11 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "secp256k1.swift",
+            name: "curveSecp256k1",
             targets: ["secp256k1.swift"]),
         
         .library(
-            name: "encryption_aes_cbc_sha512.swift",
+            name: "encryption_aes_cbc_sha512",
             targets: ["encryption_aes_cbc_sha512.swift"]),
     ],
     dependencies: [
