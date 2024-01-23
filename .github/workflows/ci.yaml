@@ -21,13 +21,6 @@ jobs:
         with:
           platform: ${{ matrix.platform }}
           action: test
-          scheme: curveSecp256k1
-          code-coverage: true
-          upload-logs: always
-      - uses: mxcl/xcodebuild@v1
-        with:
-          platform: ${{ matrix.platform }}
-          action: test
-          scheme: encryption_aes_cbc_sha512
+          scheme: curvelib.swift-Package 
           code-coverage: true
           upload-logs: always
