@@ -1,5 +1,5 @@
 import XCTest
-@testable import curvelib_swift
+@testable import curveSecp256k1
 
 final class curvelibErrorTests: XCTestCase {
     func testCurveError() {

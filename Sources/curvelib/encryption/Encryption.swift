@@ -3,6 +3,7 @@ import Foundation
 #if canImport(curvelib)
     import curvelib
 #endif
+import curveSecp256k1
 
 public final class Encryption {
     public static func encrypt(pk: PublicKey, plainText: String) throws -> EncryptedMessage {

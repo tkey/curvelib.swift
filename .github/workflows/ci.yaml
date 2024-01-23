@@ -21,6 +21,6 @@ jobs:
         with:
           platform: ${{ matrix.platform }}
           action: test
-          scheme: curvelib.swift
+          scheme: curvelib.swift-Package 
           code-coverage: true
           upload-logs: always

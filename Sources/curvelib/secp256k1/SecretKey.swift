@@ -5,7 +5,7 @@ import Foundation
 #endif
 
 public final class SecretKey {
-    private(set) var pointer: OpaquePointer?
+    private(set) public var pointer: OpaquePointer?
 
     public init() {
         pointer = curve_secp256k1_private_key_generate()
