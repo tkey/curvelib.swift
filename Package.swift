@@ -11,8 +11,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "curvelib.swift",
-            targets: ["curvelib.swift"]),
+            name: "secp256k1.swift",
+            targets: ["secp256k1.swift"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -30,12 +30,12 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "curvelib.swift",
+            name: "secp256k1.swift",
             dependencies: ["curvelib"],
             path: "Sources/curvelib"
         ),
         .testTarget(
             name: "curvelibTests",
-            dependencies: ["curvelib.swift"]),
+            dependencies: ["secp256k1.swift"]),
     ]
 )
