@@ -48,6 +48,7 @@ void curve_secp256k1_public_key_collection_free(struct PublicKeyCollection *coll
 // Signature
 struct Signature * curve_secp256k1_ecdsa_signature_parse(char *input, int *error_code);
 char * curve_secp256k1_ecdsa_signature_serialize(struct Signature *sig, int *error_code);
+char * curve_secp256k1_ecdsa_signature_serialize_der(struct Signature *sig, int *error_code);
 void curve_secp256k1_signature_free(struct Signature *signature);
 
 // ECDH

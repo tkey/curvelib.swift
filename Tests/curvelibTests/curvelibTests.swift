@@ -50,6 +50,7 @@ final class curvelibTests: XCTestCase {
         let rec = try ECDSA.recover(signature: signature, hash: messageHash)
         XCTAssertEqual(try pk.serialize(compressed: false), try rec.serialize(compressed: false))
         _ = try Signature(hex: signature.serialize())
+        _ = try signature.serialize_der()
     }
     
     func testEncryption() throws {

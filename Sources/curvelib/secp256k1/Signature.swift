@@ -35,6 +35,19 @@ public final class Signature {
         curve_secp256k1_string_free(result)
         return value
     }
+    
+    public func serialize_der() throws -> String {
+        var errorCode: Int32 = -1
+        let result = withUnsafeMutablePointer(to: &errorCode, { error in
+            curve_secp256k1_ecdsa_signature_serialize_der(pointer, error)
+        })
+        guard errorCode == 0 else {
+            throw CurveError(code: errorCode)
+        }
+        let value = String(cString: result!)
+        curve_secp256k1_string_free(result)
+        return value
+    }
 
     deinit {
         curve_secp256k1_signature_free(pointer)
