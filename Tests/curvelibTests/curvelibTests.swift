@@ -81,4 +81,15 @@ final class curvelibTests: XCTestCase {
         XCTAssertThrowsError(try Encryption.decrypt(sk: sk, encrypted: components, skipMacCheck: false))
         XCTAssertEqual(plainText.data(using: .utf8)!, decrypted)
     }
+    
+    func testEncryptionNonUTF8() throws {
+        let sk = try SecretKey(hex: "8db351704caeb01a7c7ae4860f40fb46b932e4a5ecb6283cc8481126127bf67f")
+        
+        let ephemeralPk = try PublicKey(hex: "0422472e27b6231cd657388711591ef86c1037207a72e063acf91c34f39a839ef259875d02b2f9348d890207f7f6e8e68e6f6983231aca2439d4faede4d1ea2920")
+
+        let components = try EncryptedMessage(cipherText: "c3a8d319f0f2b1cd5a453dc24ae76746b1039363fba4ddb065ba67ab4fd0583e8e01f327875a968b0274d05da1d3bfe2", ephemeralPublicKey: ephemeralPk, iv: "ee03ea6170dd9a43b1a7d6f52af0d7af", mac: "ef15d00f9a5ec3c8a8a2cb0724a624fc3b21db9e25ccc3318f83fbe06d8dd18d")
+        let decrypted = try Encryption.decrypt(sk: sk, encrypted: components, skipMacCheck: false)
+        
+        print(decrypted)
+    }
 }
