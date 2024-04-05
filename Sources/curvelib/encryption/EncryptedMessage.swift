@@ -3,7 +3,11 @@ import Foundation
 #if canImport(curvelib)
     import curvelib
 #endif
-import curveSecp256k1
+
+#if canImport(curveSecp256k1)
+    import curveSecp256k1
+#endif
+// import curveSecp256k1
 
 public final class EncryptedMessage {
     private(set) var pointer: OpaquePointer?
