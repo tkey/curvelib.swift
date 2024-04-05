@@ -64,7 +64,7 @@ public final class Encryption {
         curve_secp256k1_string_free(result)
         
         guard let result =  Data(hexString: value) else {
-            throw CurveError(code: 9)
+            throw CurveError(code: 3 )
         }
         return result
     }
