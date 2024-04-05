@@ -3,6 +3,7 @@ import XCTest
 #if !COCOAPODS
     @testable import curveSecp256k1
     @testable import encryption_aes_cbc_sha512
+    @testable import sha3
 #endif
 
 final class curvelibTests: XCTestCase {
@@ -94,5 +95,12 @@ final class curvelibTests: XCTestCase {
         let decrypted = try Encryption.decrypt(sk: sk, encrypted: components, skipMacCheck: false)
         
         print(decrypted)
+    }
+    
+    func testkeccak256() throws {
+        let data = "hello world!"
+        let hash = try keccak256(data: data.data(using: .utf8)!)
+        print(hash.hexString)
+        XCTAssert(hash.hexString == "57caa176af1ac0433c5df30e8dabcd2ec1af1e92a26eced5f719b88458777cd6")
     }
 }

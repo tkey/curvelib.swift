@@ -1,5 +1,7 @@
 import XCTest
 #if !COCOAPODS
+
+    import common
     @testable import curveSecp256k1
 #endif
 

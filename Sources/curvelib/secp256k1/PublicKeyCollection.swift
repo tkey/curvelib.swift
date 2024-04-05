@@ -4,6 +4,7 @@ import Foundation
     #if canImport(curvelib_xc)
         import curvelib_xc
     #endif
+    import common
 #endif
 
 
