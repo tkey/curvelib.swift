@@ -66,4 +66,19 @@ final class curvelibTests: XCTestCase {
         let decrypted = try Encryption.decrypt(sk: sk, encrypted: components)
         XCTAssertEqual(plainText, decrypted)
     }
+    
+    func testEncryptionSkipMacCheck() throws {
+        let sk = SecretKey()
+        let pk = try sk.toPublic()
+        let plainText = "this is testing data";
+        let encrypted = try Encryption.encrypt(pk: pk, plainText: plainText)
+        let cipherText = try encrypted.chipherText()
+        let ephemeralPk = try encrypted.ephemeralPublicKey()
+        let iv = try encrypted.iv()
+        let components = try EncryptedMessage(cipherText: cipherText, ephemeralPublicKey: ephemeralPk, iv: iv, mac: "")
+        let decrypted = try Encryption.decrypt(sk: sk, encrypted: components, skipMacCheck: true)
+        
+        XCTAssertThrowsError(try Encryption.decrypt(sk: sk, encrypted: components, skipMacCheck: false))
+        XCTAssertEqual(plainText, decrypted)
+    }
 }

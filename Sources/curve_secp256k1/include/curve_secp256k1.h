@@ -67,7 +67,9 @@ char *curve_secp256k1_encrypted_message_get_mac(struct EncryptedMessage *message
 char *curve_secp256k1_encrypted_message_get_iv(struct EncryptedMessage *message,int* error_code);
 void curve_secp256k1_encrypted_message_free(struct EncryptedMessage *message);
 struct EncryptedMessage *curve_secp256k1_aes_cbc_hmac_encrypt(struct PublicKey *public_key, char *plain_text, int *error_code);
-char *curve_secp256k1_aes_cbc_hmac_decrypt(struct SecretKey* secret_key, struct EncryptedMessage* encrypted, int* error_code );
+char *curve_secp256k1_aes_cbc_hmac_decrypt(struct SecretKey* secret_key, struct EncryptedMessage* encrypted, bool skip_mac_check, int* error_code );
+
+char *curve_sha3_sha256(char *input, int *error_code);
 
     #ifdef __cplusplus
 }     // extern "C"

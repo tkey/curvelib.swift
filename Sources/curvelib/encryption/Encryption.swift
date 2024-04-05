@@ -23,10 +23,10 @@ public final class Encryption {
         return EncryptedMessage(ptr: result!)
     }
     
-    public static func decrypt(sk: SecretKey, encrypted: EncryptedMessage) throws -> String {
+    public static func decrypt(sk: SecretKey, encrypted: EncryptedMessage, skipMacCheck:Bool = false) throws -> String {
         var errorCode: Int32 = -1
         let result = withUnsafeMutablePointer(to: &errorCode, { error in
-            curve_secp256k1_aes_cbc_hmac_decrypt(sk.pointer, encrypted.pointer, error)
+            curve_secp256k1_aes_cbc_hmac_decrypt(sk.pointer, encrypted.pointer, skipMacCheck, error)
         })
         
         guard errorCode == 0 else {
