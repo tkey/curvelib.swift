@@ -1,12 +1,13 @@
 import Foundation
 
-#if canImport(curvelib)
-    import curvelib
-#endif
+#if !COCOAPODS
+    #if canImport(curvelib_xc)
+        import curvelib_xc
+    #endif
 
-#if canImport(curveSecp256k1)
     import curveSecp256k1
 #endif
+
 // import curveSecp256k1
 
 public final class EncryptedMessage {

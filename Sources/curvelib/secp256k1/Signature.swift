@@ -1,8 +1,11 @@
 import Foundation
 
-#if canImport(curvelib)
-    import curvelib
+#if !COCOAPODS
+    #if canImport(curvelib_xc)
+        import curvelib_xc
+    #endif
 #endif
+
 
 public final class Signature {
     private(set) var pointer: OpaquePointer?
