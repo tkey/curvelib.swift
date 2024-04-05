@@ -17,15 +17,22 @@ Pod::Spec.new do |spec|
         ss.source_files = 'Sources/curve_secp256k1/include/*.h'
         ss.public_header_files = 'Sources/curve_secp256k1/include/*.h'  
     end
-
+    
+    spec.subspec 'common' do |ss|
+        ss.source_files = 'Sources/curvelib/common/**/*.{swift}'
+        ss.dependency 'curvelib/curvelib_xc'
+    end
+    
     spec.subspec 'curveSecp256k1' do |ss|
         ss.source_files = 'Sources/curvelib/secp256k1/**/*.{swift}' 
         ss.dependency 'curvelib/curvelib_xc'
+        ss.dependency 'curvelib/common'
     end
 
     spec.subspec 'encryption_aes_cbc_sha512' do |ss|
         ss.dependency 'curvelib/curveSecp256k1'
         ss.dependency 'curvelib/curvelib_xc'
+        ss.dependency 'curvelib/common'
         ss.source_files = 'Sources/curvelib/encryption/**/*.{swift}'
     end 
 
