@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
     spec.module_name = "curvelib"
     spec.source       = { :git => "https://github.com/tkey/curvelib.swift.git", :tag => spec.version }
     
-    spec.default_subspecs = 'curveSecp256k1' , 'encryption_aes_cbc_sha512', 'sha3', 'common'
+    spec.default_subspecs = []
 
     spec.subspec 'curvelib_xc' do |ss|
         ss.vendored_frameworks = 'Sources/curve_secp256k1/curve_secp256k1.xcframework'
