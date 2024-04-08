@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
     spec.license      = { :type => 'MIT', :file => 'License.md' }
     spec.swift_version   = "5.7"
     spec.author       = { "Torus Labs" => "gaurav@tor.us" }
-    spec.module_name = "curvelib"
+    spec.module_name = "curvelib_xc"
     spec.source       = { :git => "https://github.com/tkey/curvelib.swift.git", :tag => spec.version }
     
     spec.vendored_frameworks = 'Sources/curve_secp256k1/curve_secp256k1.xcframework'
