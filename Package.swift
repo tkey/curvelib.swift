@@ -17,6 +17,8 @@ let package = Package(
         .library(
             name: "encryption_aes_cbc_sha512",
             targets: ["encryption_aes_cbc_sha512"]),
+        .library(name: "curvelibSha3", targets: ["curvelibSha3"]),
+        .library(name: "curvelibCommon", targets: ["common"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -48,12 +50,12 @@ let package = Package(
             path: "Sources/curvelib/encryption"
         ),
         .target(
-            name: "sha3",
+            name: "curvelibSha3",
             dependencies: ["curvelib_xc", "common"],
             path: "Sources/curvelib/sha3"
         ),
         .testTarget(
             name: "curvelibTests",
-            dependencies: ["curveSecp256k1", "encryption_aes_cbc_sha512", "sha3"]),
+            dependencies: ["curveSecp256k1", "encryption_aes_cbc_sha512", "curvelibSha3"]),
     ]
 )
