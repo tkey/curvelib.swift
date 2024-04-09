@@ -11,7 +11,6 @@ Pod::Spec.new do |spec|
     spec.source       = { :git => "https://github.com/tkey/curvelib.swift.git", :tag => spec.version }
     
     spec.vendored_frameworks = 'Sources/curve_secp256k1/curve_secp256k1.xcframework'
-    spec.source_files = 'Sources/curve_secp256k1/include/*.h'
-    spec.public_header_files = 'Sources/curve_secp256k1/include/*.h'  
+
 
   end
