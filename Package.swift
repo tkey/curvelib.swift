@@ -18,7 +18,7 @@ let package = Package(
             name: "encryption_aes_cbc_sha512",
             targets: ["encryption_aes_cbc_sha512"]),
         .library(name: "curvelibSha3", targets: ["curvelibSha3"]),
-        .library(name: "curvelibCommon", targets: ["common"])
+        .library(name: "curvelibCommon", targets: ["curvelibCommon"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -34,24 +34,24 @@ let package = Package(
             path: "Sources/curve_secp256k1"
                 
         ),
-        .target(name: "common",
+        .target(name: "curvelibCommon",
             path: "Sources/curvelib/common"
         ),
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "curveSecp256k1",
-            dependencies: ["curvelib_xc", "common"],
+            dependencies: ["curvelib_xc", "curvelibCommon"],
             path: "Sources/curvelib/secp256k1"
         ),
         .target(
             name: "encryption_aes_cbc_sha512",
-            dependencies: ["curvelib_xc", "curveSecp256k1", "common"],
+            dependencies: ["curvelib_xc", "curveSecp256k1", "curvelibCommon"],
             path: "Sources/curvelib/encryption"
         ),
         .target(
             name: "curvelibSha3",
-            dependencies: ["curvelib_xc", "common"],
+            dependencies: ["curvelib_xc", "curvelibCommon"],
             path: "Sources/curvelib/sha3"
         ),
         .testTarget(

@@ -1,11 +1,10 @@
 import Foundation
 
-#if !COCOAPODS
-    #if canImport(curvelib_xc)
-        import curvelib_xc
-    #endif
-    import common
+#if canImport(curvelib_xc)
+    import curvelib_xc
 #endif
+
+import curvelibCommon
 
 
 public final class PublicKey {

@@ -1,9 +1,8 @@
 import XCTest
-#if !COCOAPODS
 
-    import common
-    @testable import curveSecp256k1
-#endif
+import curvelibCommon
+@testable import curveSecp256k1
+
 
 final class curvelibErrorTests: XCTestCase {
     func testCurveError() {

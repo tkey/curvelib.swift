@@ -1,12 +1,10 @@
 import Foundation
 
-#if !COCOAPODS
-    #if canImport(curvelib_xc)
-        import curvelib_xc
-    #endif
-    import common
+#if canImport(curvelib_xc)
+    import curvelib_xc
 #endif
 
+import curvelibCommon
 
 public final class ECDSA {
     public static func signRecoverable(key: SecretKey, hash: String) throws -> Signature {

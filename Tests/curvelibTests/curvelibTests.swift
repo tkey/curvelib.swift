@@ -1,10 +1,8 @@
 import XCTest
 
-#if !COCOAPODS
-    @testable import curveSecp256k1
-    @testable import encryption_aes_cbc_sha512
-    @testable import curvelibSha3
-#endif
+@testable import curveSecp256k1
+@testable import encryption_aes_cbc_sha512
+@testable import curvelibSha3
 
 final class curvelibTests: XCTestCase {
     func testSecretKey() throws {

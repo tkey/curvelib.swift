@@ -7,12 +7,11 @@
 
 import Foundation
 
-#if !COCOAPODS    
-    #if canImport(curvelib_xc)
-        import curvelib_xc
-    #endif
-    import common
+#if canImport(curvelib_xc)
+    import curvelib_xc
 #endif
+
+import curvelibCommon
 
 public func keccak256 ( data : Data ) throws -> Data {
     var errorCode: Int32 = -1

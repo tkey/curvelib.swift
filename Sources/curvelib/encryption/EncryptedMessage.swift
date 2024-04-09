@@ -1,12 +1,10 @@
 import Foundation
 
-#if !COCOAPODS
-    #if canImport(curvelib_xc)
-        import curvelib_xc
-    #endif
-    import common
-    import curveSecp256k1
+#if canImport(curvelib_xc)
+    import curvelib_xc
 #endif
+import curvelibCommon
+import curveSecp256k1
 
 
 public final class EncryptedMessage {
