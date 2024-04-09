@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name         = "encryption_aes_cbc_sha512"
-    spec.version      = "0.1.2"
+    spec.version      = "0.0.2"
     spec.platform      = :ios, "13.0"
     spec.summary      = "Curve Library for Torus"
     spec.homepage     = "https://github.com/Web3Auth"
