@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name         = "curvelibCommon"
-    spec.version      = "0.0.2"
+    spec.version      = "0.0.3"
     spec.platform      = :ios, "13.0"
     spec.summary      = "Curve Library for Torus"
     spec.homepage     = "https://github.com/Web3Auth"
