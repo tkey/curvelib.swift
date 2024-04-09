@@ -12,5 +12,6 @@ Pod::Spec.new do |spec|
 
     spec.source_files = 'Sources/curvelib/secp256k1/**/*.{swift}' 
     spec.dependency 'curvelib_xc'
-end 
+    spec.dependency 'curvelibCommon'
+end
 
