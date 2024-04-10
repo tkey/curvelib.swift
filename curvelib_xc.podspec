@@ -15,6 +15,6 @@ Pod::Spec.new do |spec|
     spec.osx.deployment_target = '10.13'
 
     spec.source_files = 'Sources/curve_secp256k1/**/*.{h,c}'
-    spec.public_header_files = 'Sources/curve_secp256k1/include/*.h'
+    # spec.public_header_files = 'Sources/curve_secp256k1/include/*.h'
 
   end
