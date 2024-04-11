@@ -17,5 +17,9 @@ Pod::Spec.new do |spec|
       ss.source_files = 'Sources/curve_secp256k1/include/*.h'
       ss.public_header_files = 'Sources/curve_secp256k1/include/*.h'  
     end
-
+    
+    spec.subspec 'common' do |ss|
+        ss.source_files = 'Sources/curvelib/common/**/*.{swift}'
+        ss.dependency 'curvelib_xc/curvelib_xc'
+    end
   end
