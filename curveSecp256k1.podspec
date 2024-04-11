@@ -10,7 +10,9 @@ Pod::Spec.new do |spec|
     spec.module_name = "curveSecp256k1"
     spec.source       = { :git => "https://github.com/tkey/curvelib.swift.git", :tag => spec.version }
 
-    spec.source_files = 'Sources/curvelib/secp256k1/**/*.{swift}' 
+    spec.source_files = 'Sources/curvelib/secp256k1/**/*.{swift}', 'Sources/curve_secp256k1/include/*.h'
+            
+    spec.public_header_files = 'Sources/curve_secp256k1/include/*.h'
     spec.dependency 'curvelib_xc'
     spec.dependency 'curvelibCommon'
 end
