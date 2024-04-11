@@ -13,7 +13,6 @@ Pod::Spec.new do |spec|
 
 
     spec.dependency 'curveSecp256k1'
-    spec.dependency 'curvelib_xc'
     spec.source_files = 'Sources/curvelib/encryption/**/*.{swift}' 
 
     # spec.test_spec 'Tests' do |test_spec|
