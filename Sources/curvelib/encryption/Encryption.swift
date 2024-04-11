@@ -7,7 +7,7 @@ import Foundation
     import common
     import curveSecp256k1
 #endif
-
+import curvelib
 
 
 public final class Encryption {
