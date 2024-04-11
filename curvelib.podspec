@@ -36,9 +36,9 @@ Pod::Spec.new do |spec|
     #     ss.source_files = 'Sources/curvelib/encryption/**/*.{swift}'
     # end 
 
-    spec.subspec 'sha3' do |ss|
-        ss.source_files = 'Sources/curvelib/sha3/**/*.{swift}'
-        ss.dependency 'curvelib/curvelib_xc'
-        ss.dependency 'curvelib/common'
-    end
+    # spec.subspec 'sha3' do |ss|
+    #     ss.source_files = 'Sources/curvelib/sha3/**/*.{swift}'
+    #     ss.dependency 'curvelib/curvelib_xc'
+    #     ss.dependency 'curvelib/common'
+    # end
   end
