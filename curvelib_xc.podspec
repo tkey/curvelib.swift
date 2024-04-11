@@ -9,12 +9,13 @@ Pod::Spec.new do |spec|
     spec.module_name = "curvelib_xc"
     spec.source       = { :git => "https://github.com/tkey/curvelib.swift.git", :tag => spec.version }
     
-    spec.vendored_frameworks = 'Sources/curve_secp256k1/curve_secp256k1.xcframework'
-    
     spec.ios.deployment_target = '13.0'
     spec.osx.deployment_target = '10.13'
 
-    spec.source_files = 'Sources/curve_secp256k1/**/*.{h,c}'
-    spec.public_header_files = 'Sources/curve_secp256k1/include/*.h'
+    spec.subspec 'curvelib_xc' do |ss|
+      ss.vendored_frameworks = 'Sources/curve_secp256k1/curve_secp256k1.xcframework'
+      ss.source_files = 'Sources/curve_secp256k1/include/*.h'
+      ss.public_header_files = 'Sources/curve_secp256k1/include/*.h'  
+    end
 
   end
