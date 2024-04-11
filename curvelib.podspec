@@ -23,11 +23,11 @@ Pod::Spec.new do |spec|
         ss.dependency 'curvelib/curvelib_xc'
     end
     
-    spec.subspec 'curveSecp256k1' do |ss|
-        ss.source_files = 'Sources/curvelib/secp256k1/**/*.{swift}' 
-        ss.dependency 'curvelib/curvelib_xc'
-        ss.dependency 'curvelib/common'
-    end
+    # spec.subspec 'curveSecp256k1' do |ss|
+    #     ss.source_files = 'Sources/curvelib/secp256k1/**/*.{swift}' 
+    #     ss.dependency 'curvelib/curvelib_xc'
+    #     ss.dependency 'curvelib/common'
+    # end
 
     # spec.subspec 'encryption_aes_cbc_sha512' do |ss|
     #     ss.dependency 'curvelib/curveSecp256k1'
