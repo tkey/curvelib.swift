@@ -15,7 +15,7 @@ public struct CurveError: Error, LocalizedError {
         case unknownStatusCode
     }
 
-    private(set) var type: ErrorType
+    private(set) public var type: ErrorType
 
     public init(code: Int32) {
         switch code {
