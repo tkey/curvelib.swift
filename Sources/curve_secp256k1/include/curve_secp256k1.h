@@ -21,7 +21,7 @@ char * curve_secp256k1_get_version(int *error_code);
 void curve_secp256k1_string_free(char *ptr);
 
 // PrivateKey
-struct SecretKey * curve_secp256k1_private_key_generate();
+struct SecretKey * curve_secp256k1_private_key_generate(void);
 struct SecretKey * curve_secp256k1_private_key_parse(char *input, int *error_code);
 void curve_secp256k1_private_key_tweak_add_assign(struct SecretKey *key, struct SecretKey *tweak, int *error_code);
 void curve_secp256k1_private_key_tweak_mul_assign(struct SecretKey *key, struct SecretKey *tweak, int *error_code);
@@ -41,7 +41,7 @@ struct PublicKey * curve_secp256k1_public_key_combine(struct PublicKeyCollection
 void curve_secp256k1_public_key_free(struct PublicKey *key);
 
 // PublicKeyCollection
-struct PublicKeyCollection * curve_secp256k1_public_key_collection_new();
+struct PublicKeyCollection * curve_secp256k1_public_key_collection_new(void);
 void curve_secp256k1_public_key_collection_add(struct PublicKeyCollection *collection, struct PublicKey *key, int *error_code);
 void curve_secp256k1_public_key_collection_free(struct PublicKeyCollection *collection);
 
