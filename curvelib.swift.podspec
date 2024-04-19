@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "curvelib.swift"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.ios.deployment_target = '13.0'
   spec.summary      = "Fetches the node details from torus nodelist smart contract"
   spec.homepage     = "https://github.com/tkey/curvelib.swift"
