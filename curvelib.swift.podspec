@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "curvelib.swift"
-  spec.version      = "1.0.1"
+  spec.version      = "2.0.0"
   spec.ios.deployment_target = '13.0'
   spec.summary      = "Elliptic Curve operations"
   spec.homepage     = "https://github.com/tkey/curvelib.swift"
